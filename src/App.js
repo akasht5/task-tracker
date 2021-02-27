@@ -40,13 +40,15 @@ function App() {
   }
 
   const setAddForm = () => {
-    setShowAddTask(!showAddTask);
-    
+    setShowAddTask(!showAddTask); 
   }
 
-
+  const onToggleReminder = (id) => {
+      setTasks(tasks.map((item) => item.id === id ? {...item,reminder:!item.reminder} : item))
+  }
+  
   return (
-      <div className="container">
+      <div className="container" style={{ userSelect:"none" }}>
         <Header showAddTask={showAddTask} setAddForm={setAddForm} />
         {
           showAddTask && ( <AddTask onAdd={onAdd}  /> )
@@ -54,7 +56,7 @@ function App() {
             
           
         {tasks.length > 0 ? (
-            <Tasks tasks={tasks} onDelete={deleteTask} />
+            <Tasks tasks={tasks} onDelete={deleteTask} toggleReminder={onToggleReminder} />
         ) : (
           'No Tasks To Show !'
         )}
